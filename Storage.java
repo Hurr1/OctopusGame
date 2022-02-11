@@ -1,26 +1,28 @@
-public class Storage {
+public class Storage
+{
 
-    final int maxStorageSize = 99;
-    public int gold;
+    final int MAX_STORAGE_SIZE = 99;
+    private int gold;
 
-
-    public Storage(){
-        gold = 0;
+    public Storage()
+    {
+        this.gold = 0;
     }
 
-    void refill(int stolenCoins){
-        gold= gold+stolenCoins;
+    void refill(int stolenCoins)
+    {
+        this.gold= gold+stolenCoins;
     }
-    void toEmpty(){
-        gold=0;
+    void toEmpty()
+    {
+        this.gold=0;
     }
-
-    public int getGold() {
-        return gold;
+    public int getGold() 
+    {
+        return this.gold;
     }
-    boolean checkStatus (){
-        if(gold>=maxStorageSize)
-            return false;
-        return true;
+    boolean checkStatus ()
+    {
+        return this.gold <= MAX_STORAGE_SIZE;
     }
 }
