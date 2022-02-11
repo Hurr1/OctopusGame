@@ -1,10 +1,11 @@
-import javafx.event.EventHandler;
+package com.example.demo2;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.event.EventHandler;
 
 
 import java.io.FileInputStream;
@@ -38,7 +39,7 @@ public class GameController {
 
 
 
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<>() {
             int positionIndex = 0;
 
 
@@ -52,14 +53,12 @@ public class GameController {
                                 diverGuy.getGuyImage().setX(pos.get(positionIndex)[0]);
                                 diverGuy.getGuyImage().setY(pos.get(positionIndex)[1]);
                             } else {
-                                if (positionIndex == 0) {
-                                    storage.refill(diverGuy.getCountOfGold());
-                                    textLabel.setText(storage.getGold() + "");
-                                    diverGuy.setCountOfGold(0);
-                                    positionIndex++;
-                                    diverGuy.getGuyImage().setX(pos.get(positionIndex)[0]);
-                                    diverGuy.getGuyImage().setY(pos.get(positionIndex)[1]);
-                                }
+                                storage.refill(diverGuy.getCountOfGold());
+                                textLabel.setText(storage.getGold() + "");
+                                diverGuy.setCountOfGold(0);
+                                positionIndex++;
+                                diverGuy.getGuyImage().setX(pos.get(positionIndex)[0]);
+                                diverGuy.getGuyImage().setY(pos.get(positionIndex)[1]);
                             }
                         }
 
@@ -80,13 +79,13 @@ public class GameController {
                     }
                     if (positionIndex == 0) {
                         try {
-                            diverGuy.getGuyImage().setImage(new Image(new FileInputStream("UrPath\\Images\\GuyOnBoard.png")));
+                            diverGuy.getGuyImage().setImage(new Image(new FileInputStream("urPath/GuyOnBoard.png")));
                         } catch (FileNotFoundException e) {
                             e.getMessage();
                         }
                     } else
                         try {
-                            diverGuy.getGuyImage().setImage(new Image(new FileInputStream("UrPath\\Images\\RunningGuy.png")));
+                            diverGuy.getGuyImage().setImage(new Image(new FileInputStream("urPath/RunningGuy.png")));
                         } catch (FileNotFoundException e) {
                             e.getMessage();
                         }
@@ -95,3 +94,4 @@ public class GameController {
         });
     }
 }
+
