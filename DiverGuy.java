@@ -5,12 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class DiverGuy {
-    public int posX;
-    public int posY;
-    public int countOfGold;
-    boolean lifeStatus = true;
-
-    ImageView runningGuy;
+    private int posX ,posY, countOfGold;
+    private boolean lifeStatus = true;
+    private ImageView runningGuy;
 
     public DiverGuy(int posX,int posY) throws FileNotFoundException {
         this.posX = posX;
