@@ -5,23 +5,18 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class DiverGuy {
-    private int posX ,posY, countOfGold;
-    private boolean lifeStatus = true;
-    private ImageView runningGuy;
+    public int posX;
+    public int posY;
+    public int countOfGold;
+    boolean lifeStatus = true;
+
+    ImageView runningGuy;
 
     public DiverGuy(int posX,int posY) throws FileNotFoundException {
         this.posX = posX;
         this.posY = posY;
         setCountOfGold(0);
-        runningGuy = new ImageView(new Image(new FileInputStream("UrPath\\Images\\GuyOnBoard.png")));
-    }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
+        runningGuy = new ImageView(new Image(new FileInputStream("urPath/GuyOnBoard.png")));
     }
 
     public void setCountOfGold(int newGoldValue) {
@@ -60,4 +55,5 @@ public class DiverGuy {
         return countOfGold;
     }
 }
+
 
