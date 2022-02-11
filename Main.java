@@ -15,14 +15,11 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Label;
-
 import java.io.*;
 
-import java.util.HashMap;
 
 public class Main extends Application {
 
-    HashMap<Integer, int[]> pos;
     DiverGuy diverGuy;
     Storage storage;
 
@@ -43,12 +40,12 @@ public class Main extends Application {
         root.getChildren().add(nickField);
 
         ObservableList<String> obsListForResults = FXCollections.observableArrayList();
-        ListView<String> listOfResults = new ListView<String>(obsListForResults);
+        ListView<String> listOfResults = new ListView<>(obsListForResults);
         listOfResults.setLayoutX(370);
         listOfResults.setLayoutY(150);
 
         try {
-            File file = new File("UrPath\\Results.txt");
+            File file = new File("urPath/Results.txt");
             FileReader fr = new FileReader(file);
             BufferedReader reader = new BufferedReader(fr);
             String line = reader.readLine();
@@ -72,54 +69,54 @@ public class Main extends Application {
         stage.show();
 
         scene.addEventFilter(KeyEvent.KEY_PRESSED,
-                new EventHandler<KeyEvent>() {
-                    Image gameScreen = new Image(new FileInputStream("UrPath\\Images\\GameScreen.png"));
+                new EventHandler<>() {
+                    final Image gameScreen = new Image(new FileInputStream("urPath/GameScreen.png"));
+
                     public void handle(KeyEvent ke) {
-                            if (ke.getCode() == KeyCode.SPACE) {
+                        if (ke.getCode() == KeyCode.SPACE) {
 
-                                ImageView imageView = new ImageView();
-                                imageView.setImage(gameScreen);
+                            ImageView imageView = new ImageView();
+                            imageView.setImage(gameScreen);
 
-                                try(FileWriter writer = new FileWriter("UrPath\\Results.txt",true))
-                                {
-                                    BufferedWriter bufferedWriter = new BufferedWriter(writer);
-                                    bufferedWriter.write(" " + nickField.getText() +"    ");
-                                    bufferedWriter.close();
-                                } catch (IOException e) {
-                                    e.getMessage();
-                                }
-
-
-                                Group root = new Group(imageView);
-                                Label score = new Label();
-                                score.setLayoutX(380);
-                                score.setLayoutY(85);
-                                score.setText("0");
-                                score.setFont(new Font(25));
-
-                                Scene scene = new Scene(root, 630, 345);
-
-                                stage.setScene(scene);
-                                stage.setTitle("GamePanel");
-                                stage.show();
-
-                                long startTime = System.currentTimeMillis();
-
-                                try {
-                                        diverGuy = new DiverGuy(195,85);
-                                        diverGuy.getGuyImage().setX(diverGuy.getPosX());
-                                        diverGuy.getGuyImage().setY(diverGuy.getPosY());
-                                        root.getChildren().add(diverGuy.getGuyImage());
-                                        root.getChildren().add(score);
-                                        GameController game = new GameController(scene, root, score, diverGuy, storage);
-                                        Octopus octopus = new Octopus(scene, root, storage, diverGuy,startTime);
-                                        octopus.Attack((int)(Math.random()*3)+1);
-                                        octopus.checkGameStatus();
-                                        octopus.checkDiverStatus();
-                                } catch (FileNotFoundException | InterruptedException e) {
-                                    e.getMessage();
-                                }
+                            try (FileWriter writer = new FileWriter("urPath/Results.txt", true)) {
+                                BufferedWriter bufferedWriter = new BufferedWriter(writer);
+                                bufferedWriter.write(" " + nickField.getText() + "    ");
+                                bufferedWriter.close();
+                            } catch (IOException e) {
+                                e.getMessage();
                             }
+
+
+                            Group root = new Group(imageView);
+                            Label score = new Label();
+                            score.setLayoutX(380);
+                            score.setLayoutY(85);
+                            score.setText("0");
+                            score.setFont(new Font(25));
+
+                            Scene scene = new Scene(root, 630, 345);
+
+                            stage.setScene(scene);
+                            stage.setTitle("GamePanel");
+                            stage.show();
+
+                            long startTime = System.currentTimeMillis();
+
+                            try {
+                                diverGuy = new DiverGuy(195, 85);
+                                diverGuy.getGuyImage().setX(diverGuy.getPosX());
+                                diverGuy.getGuyImage().setY(diverGuy.getPosY());
+                                root.getChildren().add(diverGuy.getGuyImage());
+                                root.getChildren().add(score);
+                                GameController game = new GameController(scene, root, score, diverGuy, storage);
+                                Octopus octopus = new Octopus(root, storage, diverGuy, startTime);
+                                octopus.Attack((int) (Math.random() * 3) + 1);
+                                octopus.checkGameStatus();
+                                octopus.checkDiverStatus();
+                            } catch (FileNotFoundException | InterruptedException e) {
+                                e.getMessage();
+                            }
+                        }
                     }
                 }
         );
