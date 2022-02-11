@@ -18,13 +18,15 @@ import javafx.scene.control.Label;
 import java.io.*;
 
 
-public class Main extends Application {
+public class Main extends Application
+{
 
     DiverGuy diverGuy;
     Storage storage;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception
+    {
 
         this.diverGuy = null;
         this.storage = new Storage();
@@ -33,7 +35,7 @@ public class Main extends Application {
         nickLabel.setFont(new Font(30));
         nickLabel.setTranslateX(115);
 
-        TextField nickField = new TextField("player");
+        TextField nickField = new TextField("Player");
 
         Pane root = new VBox();
         root.getChildren().add(nickLabel);
@@ -100,8 +102,6 @@ public class Main extends Application {
                             stage.setTitle("GamePanel");
                             stage.show();
 
-                            long startTime = System.currentTimeMillis();
-
                             try {
                                 diverGuy = new DiverGuy(195, 85);
                                 diverGuy.getGuyImage().setX(diverGuy.getPosX());
@@ -109,7 +109,7 @@ public class Main extends Application {
                                 root.getChildren().add(diverGuy.getGuyImage());
                                 root.getChildren().add(score);
                                 GameController game = new GameController(scene, root, score, diverGuy, storage);
-                                Octopus octopus = new Octopus(root, storage, diverGuy, startTime);
+                                Octopus octopus = new Octopus(root, storage, diverGuy, System.currentTimeMillis());
                                 octopus.Attack((int) (Math.random() * 3) + 1);
                                 octopus.checkGameStatus();
                                 octopus.checkDiverStatus();
@@ -123,7 +123,8 @@ public class Main extends Application {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 
