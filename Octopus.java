@@ -3,7 +3,6 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.concurrent.Task;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
@@ -16,43 +15,39 @@ import static java.lang.Thread.sleep;
 
 public class Octopus{
 
-    Scene scene;
-    Group root;
-    ImageView [][] octopusArms;
-    Storage storage;
-    DiverGuy diverGuy;
-    boolean n = true;
-    long time;
+    private final ImageView [][] octopusArms;
+    private final Storage storage;
+    private final DiverGuy diverGuy;
+    private final long time;
 
-    public Octopus(Scene scene, Group root,Storage storage,DiverGuy diverGuy, long time) throws FileNotFoundException {
-        this.scene=scene;
-        this.root = root;
+    public Octopus(Group root,Storage storage,DiverGuy diverGuy, long time) throws FileNotFoundException {
+
         this.storage = storage;
         this.diverGuy = diverGuy;
         this.time = time;
 
-        ImageView tentacle_01 = new ImageView(new Image(new FileInputStream("UrPath\\Images\\tentacles1.png")));
-        ImageView tentacle_02 = new ImageView(new Image(new FileInputStream("UrPath\\Images\\tentacles2.png")));
-        ImageView tentacle_03 = new ImageView(new Image(new FileInputStream("UrPath\\Images\\tentacles3.png")));
+        ImageView tentacle_01 = new ImageView(new Image(new FileInputStream("urPath/tentacles1.png")));
+        ImageView tentacle_02 = new ImageView(new Image(new FileInputStream("urPath/tentacles2.png")));
+        ImageView tentacle_03 = new ImageView(new Image(new FileInputStream("urPath/tentacles3.png")));
         ImageView[] firstArm = new ImageView[]{tentacle_01, tentacle_02, tentacle_03};
-        ImageView tentacle_11 = new ImageView(new Image(new FileInputStream("UrPath\\Images\\tentacles1.png")));
-        ImageView tentacle_12 = new ImageView(new Image(new FileInputStream("UrPath\\Images\\tentacles2.png")));
-        ImageView tentacle_13 = new ImageView(new Image(new FileInputStream("UrPath\\Images\\tentacles3.png")));
+        ImageView tentacle_11 = new ImageView(new Image(new FileInputStream("urPath/tentacles1.png")));
+        ImageView tentacle_12 = new ImageView(new Image(new FileInputStream("urPath/tentacles2.png")));
+        ImageView tentacle_13 = new ImageView(new Image(new FileInputStream("urPath/tentacles3.png")));
         ImageView[] secondArm = new ImageView[]{tentacle_11, tentacle_12, tentacle_13};
-        ImageView tentacle_21 = new ImageView(new Image(new FileInputStream("UrPath\\Images\\tentacles1.png")));
-        ImageView tentacle_22 = new ImageView(new Image(new FileInputStream("UrPath\\Images\\tentacles2.png")));
-        ImageView tentacle_23 = new ImageView(new Image(new FileInputStream("D:\\JavaFX3\\Images\\tentacles3.png")));
+        ImageView tentacle_21 = new ImageView(new Image(new FileInputStream("urPath/tentacles1.png")));
+        ImageView tentacle_22 = new ImageView(new Image(new FileInputStream("urPath/tentacles2.png")));
+        ImageView tentacle_23 = new ImageView(new Image(new FileInputStream("urPath/tentacles3.png")));
         ImageView[] thirdArm = new ImageView[]{tentacle_21, tentacle_22, tentacle_23};
-        ImageView tentacle_31 = new ImageView(new Image(new FileInputStream("UrPath\\Images\\tentacles2.png")));
-        ImageView tentacle_32 = new ImageView(new Image(new FileInputStream("UrPath\\Images\\tentacles2.png")));
-        ImageView tentacle_33 = new ImageView(new Image(new FileInputStream("UrPath\\Images\\tentacles2.png")));
+        ImageView tentacle_31 = new ImageView(new Image(new FileInputStream("urPath/tentacles2.png")));
+        ImageView tentacle_32 = new ImageView(new Image(new FileInputStream("urPath/tentacles2.png")));
+        ImageView tentacle_33 = new ImageView(new Image(new FileInputStream("urPath/tentacles2.png")));
         ImageView[] fourthArm = new ImageView[]{tentacle_31, tentacle_32, tentacle_33};
         octopusArms = new ImageView[][]{firstArm, secondArm, thirdArm, fourthArm};
 
-        for(int i = 0; i< octopusArms.length; i++){
-            for(int g = 0; g< octopusArms[1].length; g++){
-                octopusArms[i][g].setVisible(false);
-                root.getChildren().add(octopusArms[i][g]);
+        for (ImageView[] octopusArm : octopusArms) {
+            for (int g = 0; g < octopusArms[1].length; g++) {
+                octopusArm[g].setVisible(false);
+                root.getChildren().add(octopusArm[g]);
             }
         }
 
@@ -108,7 +103,7 @@ public class Octopus{
     public void Attack(int i){
 
         if (i == 1) {
-            Task pattern_1 = new Task<Void>() {
+            Task<Void> pattern_1 = new Task<>() {
                 @Override
                 public Void call() {
                     Timeline attackpattern = new Timeline(
@@ -144,7 +139,7 @@ public class Octopus{
             new Thread(pattern_1).start();
         }
         if (i == 2) {
-            Task pattern_2 = new Task<Void>() {
+            Task<Void> pattern_2 = new Task<>() {
                 @Override
                 public Void call() {
                     Timeline attackpattern = new Timeline(
@@ -181,7 +176,7 @@ public class Octopus{
             new Thread(pattern_2).start();
         }
         if (i == 3) {
-            Task pattern_3 = new Task<Void>() {
+            Task<Void> pattern_3 = new Task<>() {
                 @Override
                 public Void call() {
                     Timeline attackpattern = new Timeline(
@@ -221,18 +216,19 @@ public class Octopus{
     }
 
     public void checkGameStatus(){
-        Task checkProcessStatus = new Task<Void>() {
+        Task<Void> checkProcessStatus = new Task<>() {
             @Override
             public Void call() throws InterruptedException, FileNotFoundException {
                 while (storage.checkStatus()) {
+                    Thread.sleep(100);
                 }
-                diverGuy.getGuyImage().setImage(new Image(new FileInputStream("UrPath\\Images\\WonGuy.png")));
+                diverGuy.getGuyImage().setImage(new Image(new FileInputStream("urPath/WonGuy.png")));
                 diverGuy.kill();
 
-                try(FileWriter writer = new FileWriter("UrPath\\Results.txt", true))
+                try(FileWriter writer = new FileWriter("urPath/Results.txt", true))
                 {
                     BufferedWriter bufferedWriter = new BufferedWriter(writer);
-                    bufferedWriter.write("  Time: " + (Integer.toString((int)(System.currentTimeMillis() - time)/1000)) +"  Score: " + storage.gold + "\n");
+                    bufferedWriter.write("  Time: " + ((int)(System.currentTimeMillis() - time)/1000) +"  Score: " + storage.gold + "\n");
                     bufferedWriter.close();
                 } catch (IOException e) {
                     e.getMessage();
@@ -247,7 +243,7 @@ public class Octopus{
     }
 
     public void checkDiverStatus(){
-        Task checkGuyStatus = new Task<Void>() {
+        Task<Void> checkGuyStatus = new Task<>() {
             @Override
             public Void call() throws InterruptedException, FileNotFoundException {
                 boolean status = false;
@@ -266,13 +262,13 @@ public class Octopus{
                     status = true;
                 }
                 }
-                diverGuy.getGuyImage().setImage(new Image(new FileInputStream("UrPath\\Images\\CatchedGuy.png")));
+                diverGuy.getGuyImage().setImage(new Image(new FileInputStream("urPath/CatchedGuy.png")));
                 diverGuy.kill();
                 sleep(1000);
-                try(FileWriter writer = new FileWriter("UrPath\\Results.txt", true))
+                try(FileWriter writer = new FileWriter("urPath/Results.txt", true))
                 {
                     BufferedWriter bufferedWriter = new BufferedWriter(writer);
-                    bufferedWriter.write("  Time: " + (Integer.toString((int)(System.currentTimeMillis() - time)/1000)) +" Score: " + storage.gold + "\n");
+                    bufferedWriter.write("  Time: " + ((int)(System.currentTimeMillis() - time)/1000) +" Score: " + storage.gold + "\n");
                     bufferedWriter.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -286,5 +282,6 @@ public class Octopus{
         new Thread(checkGuyStatus).start();
     }
 }
+
 
 
