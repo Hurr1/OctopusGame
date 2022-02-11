@@ -13,7 +13,7 @@ public class DiverGuy {
         this.posX = posX;
         this.posY = posY;
         setCountOfGold(0);
-        runningGuy = new ImageView(new Image(new FileInputStream("UrPath\Images\\GuyOnBoard.png")));
+        runningGuy = new ImageView(new Image(new FileInputStream("UrPath\\Images\\GuyOnBoard.png")));
     }
 
     public void setPosX(int posX) {
