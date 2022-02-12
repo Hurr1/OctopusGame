@@ -58,11 +58,8 @@ public class Main extends Application
         } catch (IOException e) {
             e.getMessage();
         }
-
-
-
         root.getChildren().add(listOfResults);
-
+        
         Scene scene = new Scene(root, 450, 250);
 
         stage.setTitle("MainMenu");
